@@ -9,32 +9,33 @@ func TestPremieter(t *testing.T) {
 	got:= Perimeter(rectangle)
 	want:=40.0
 
-	assertEqual(got, want, t)
+	if got != want{
+		t.Errorf("got %g, want %g", got, want)
+	}
 
 	
 }
 
 func TestArea(t *testing.T){
+	
+	//check area
+	checkArea:=func (t *testing.T, shape Shape, want float64){
+		t.Helper()
+		got:= shape.Area()
+		if got != want{
+			t.Errorf("got %g, want %g", got, want)
+		}
+	}
 	t.Run("rectangles",func(t *testing.T) {
 		rectangle:=Rectangle{12.0,6.0}
-		got:=rectangle.Area()
 		want:= 72.0
-	
-		assertEqual(got, want, t)
+		checkArea(t,rectangle,want)
 	})
 
 	t.Run("circles",func(t *testing.T) {
 		circle:=Circle{10.0}
-		got:=circle.Area()
 		want:=314.1592653589793
-		assertEqual(got,want,t)
+		checkArea(t,circle,want)
 	})
 	
-}
-
-func assertEqual(got float64, want float64, t *testing.T) {
-	t.Helper()
-	if got != want {
-		t.Errorf("got %g, want %g", got, want)
-	}
 }

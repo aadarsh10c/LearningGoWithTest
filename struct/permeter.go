@@ -2,6 +2,11 @@ package structs
 
 import "math"
 
+//interface
+type Shape interface{
+	Area() float64
+}
+
 type Rectangle struct {
 	width  float64
 	height float64
@@ -16,7 +21,7 @@ type Circle struct {
 	radius float64
 }
 
-//method for rectangle
+//method for circle
 func (c Circle) Area() float64 {
 	return math.Pi*c.radius*c.radius
 }
