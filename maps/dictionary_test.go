@@ -27,17 +27,27 @@ func TestSearch(t *testing.T) {
 }
 
 func TestAdd(t *testing.T) {
-	dictionary := Dictionary{}
-	dictionary.Add("test", "this is just a test")
+	word := "test"
+	definiton := "this is just a test"
+	t.Run("new Word", func(t *testing.T) {
+		dictionary := Dictionary{}
+		err := dictionary.Add(word, definiton)
+		assertError(err, nil, t)
+		asserDefinition(dictionary, word, t, definiton)
+	})
+	t.Run("existing word", func(t *testing.T) {
+		dictionary := Dictionary{word: definiton}
+		err := dictionary.Add(word, "new word")
+		assertError(err, ErrWordExists, t)
+		asserDefinition(dictionary, word, t, definiton)
+	})
 
-	want := "this is just a test"
-	got, err := dictionary.Search("test")
+}
 
-	if err != nil {
-		t.Fatal("should find added word:", err)
-	}
-
-	assertStrings(got, want, t)
+func asserDefinition(dictionary Dictionary, word string, t *testing.T, definiton string) {
+	t.Helper()
+	got, _ := dictionary.Search(word)
+	assertStrings(got, definiton, t)
 }
 
 func assertError(got, want error, t *testing.T) {
