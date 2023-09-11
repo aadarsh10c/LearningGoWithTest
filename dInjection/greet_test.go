@@ -1,4 +1,4 @@
-package dinjection
+package main
 
 import (
 	"bytes"
