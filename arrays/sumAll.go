@@ -1,10 +1,10 @@
 package arrays
 
-//Takes vriable arrays and returns an array with sum of each array
-func SumAll(numbersToSum ...[]int) (sums []int) {
-	for _, number := range numbersToSum {
-		sums = append(sums, Sum(number))
-	}
+func SumAll(numList ...[]int) []int {
+	var sumAll []int
 
-	return
+	for _, value := range numList {
+		sumAll = append(sumAll, Sum(value))
+	}
+	return sumAll
 }
