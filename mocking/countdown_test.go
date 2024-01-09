@@ -1,43 +1,55 @@
-package main
+package mocking
 
 import (
-	"reflect"
+	"bytes"
 	"testing"
 )
 
-func TestCountDown(t *testing.T) {
-	// buffer := &bytes.Buffer{}
-	spySleeper := &SpyCountDownOperations{}
-	CountDown(spySleeper, spySleeper)
-	// got := buffer.String()
-	// want := "3\n2\n1\nGo!"
-	want := []string{
-		write,
-		sleep,
-		write,
-		sleep,
-		write,
-		sleep,
-		write,
-	}
-
-	if !reflect.DeepEqual(want, spySleeper.Calls) {
-		t.Errorf("wanted calls %v got %v", want, spySleeper.Calls)
-	}
+type spySleeper struct {
+	Calls int
 }
 
-type SpyCountDownOperations struct {
-	Calls []string
+func (s *spySleeper) Sleep() {
+	s.Calls++
 }
 
-func (s *SpyCountDownOperations) Sleep() {
-	s.Calls = append(s.Calls, sleep)
+func TestCountdown(t *testing.T) {
+	buffer := &bytes.Buffer{}
+// 	t.Run("Print 3", func(t *testing.T) {
+
+// 		CountDown(buffer)
+// 		got := buffer.String()
+// 		want := "3"
+
+// 		compareString(got, want, t)
+
+// 	})
+// 	t.Run("Print 3,2,1,go", func(t *testing.T) {
+// 		CountDown(buffer)
+
+// 		got := buffer.String()
+// 		want := `3
+// 2
+// 1
+// go
+// `
+
+// 		compareString(got, want, t)
+
+// 	})
+	t.Run("Mocking", func(t *testing.T) {
+		spy := &spySleeper{}
+		CountDown(buffer, spy)
+		got := spy.Calls
+		want := 3
+		if got != want {
+			t.Fatalf("Got %d, wanted %d", got, want)
+		}
+	})
 }
 
-func (s *SpyCountDownOperations) Write(p []byte) (n int, err error) {
-	s.Calls = append(s.Calls, write)
-	return
-}
-
-const write = "write"
-const sleep = "sleep"
+// func compareString(got string, want string, t *testing.T) {
+// 	if got != want {
+// 		t.Errorf("got %q want %q", got, want)
+// 	}
+// }

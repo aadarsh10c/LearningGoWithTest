@@ -1,15 +1,19 @@
 package main
 
 import (
-	"log"
 	"os"
+	"time"
 
-	d "github.com/aadarsh10c/LearningGoWithTest/dinjection"
-
-	"net/http"
+	m "github.com/aadarsh10c/LearningGoWithTest/mocking"
 )
 
+type DefaultSleep struct{}
+
+func (d *DefaultSleep) Sleep(){
+	time.Sleep(1 * time.Second)
+}
+
 func main() {
-	d.Greet(os.Stdout, "Test")
-	log.Fatal(http.ListenAndServe(":5001", http.HandlerFunc(d.MyGreeterHandler)))
+	d := &DefaultSleep{}
+	m.CountDown(os.Stdout, d)
 }

@@ -1,31 +1,21 @@
-package main
+package mocking
 
 import (
 	"fmt"
 	"io"
-	"os"
-	"time"
 )
+
+const countdownStart = 3
+const finalValue = "go"
 
 type Sleeper interface {
 	Sleep()
 }
 
-type DefaultSleeper struct{}
-
-func (d *DefaultSleeper) Sleep() {
-	time.Sleep(1 * time.Second)
-}
-
-func CountDown(out io.Writer, sleeper Sleeper) {
-	for i := 3; i > 0; i-- {
-		fmt.Fprintln(out, i)
+func CountDown(w io.Writer, sleeper Sleeper) {
+	for i := countdownStart; i > 0; i-- {
+		fmt.Fprintln(w, i)
 		sleeper.Sleep()
 	}
-	fmt.Fprint(out, "Go!")
-}
-
-func main() {
-	defaultSleeper := &DefaultSleeper{}
-	CountDown(os.Stdout, defaultSleeper)
+	fmt.Fprintln(w, finalValue)
 }
