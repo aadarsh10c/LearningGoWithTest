@@ -1,15 +1,15 @@
-package racer
+package selecting
 
 import (
 	"net/http"
 	"time"
 )
 
-func Racer(a, b string) (winner string) {
-	aDuration := measureTime(a)
-	bDuration := measureTime(b)
+func Racer(a, b string) string {
+	durationA := measureTime(a)
+	durationB := measureTime(b)
 
-	if aDuration < bDuration {
+	if durationA < durationB {
 		return a
 	}
 	return b
