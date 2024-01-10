@@ -3,7 +3,7 @@ package concurrency
 import (
 	"reflect"
 	"testing"
-	"time"
+	// "time"
 )
 
 func mockWebsiteCheck(url string) bool {
@@ -32,7 +32,7 @@ func TestCheckWebsites(t *testing.T) {
 }
 
 func slowStubWebsiteChecket(_ string) bool {
-	time.Sleep(20 * time.Millisecond)
+	// time.Sleep(20 * time.Millisecond)
 	return true
 }
 
