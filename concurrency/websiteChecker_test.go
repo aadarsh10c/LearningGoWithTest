@@ -5,7 +5,9 @@ import (
 	"testing"
 )
 
-func mockWebsiteChecker(url string) bool {
+type testWebsiteCallback struct{}
+
+func (t *testWebsiteCallback) CallBack(url string) bool {
 	return url != "waat://furhurterwe.geds"
 }
 
@@ -15,16 +17,16 @@ func TestCheckWebsites(t *testing.T) {
 		"http://blog.gypsydave5.com",
 		"waat://furhurterwe.geds",
 	}
-
-	want := map[string]bool{
-		"http://google.com":          true,
-		"http://blog.gypsydave5.com": true,
-		"waat://furhurterwe.geds":    false,
-	}
-
-	got := CheckWebsites(mockWebsiteChecker, websites)
-
-	if !reflect.DeepEqual(got, want) {
-		t.Fatalf("wanted %v, got %v", want, got)
-	}
+	t.Run("Websites map", func(t *testing.T) {
+		test := &testWebsiteCallback{}
+		got := CheckWebsites(test, websites)
+		want := map[string]bool{
+			"http://google.com":          true,
+			"http://blog.gypsydave5.com": true,
+			"waat://furhurterwe.geds":    false,
+		}
+		if !reflect.DeepEqual(want, got) {
+			t.Fatalf("wanted %v, got %v", want, got)
+		}
+	})
 }
