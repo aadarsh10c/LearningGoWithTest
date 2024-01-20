@@ -30,3 +30,4 @@ func assertStruct(got, want interface{}, t *testing.T) {
 		t.Errorf("Got %v , want %v", got, want)
 	}
 }
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="occp_cdr_types.xsd"></xs:include>
+
+    <xs:element name="CDR">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="call" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:choice minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="call_leg" minOccurs="0" maxOccurs="unbounded" type="call_leg"></xs:element>
+                            <xs:element name="scif_event" minOccurs="0" maxOccurs="unbounded" type="scif_event"></xs:element>
+                            <xs:element name="gets_info" minOccurs="0" maxOccurs="unbounded" type="gets_info"></xs:element>
+                            <xs:element name="service_event" minOccurs="0" maxOccurs="unbounded" type="service_event"></xs:element>
+                            <xs:element name="application_info" minOccurs="0" maxOccurs="unbounded" type="application_info"></xs:element>
+                            <xs:element name="gets_cdr" minOccurs="0" maxOccurs="unbounded" type="gets_cdr"></xs:element>
+                        </xs:choice>
+                        <xs:attribute name="call-id" type="xs:string"></xs:attribute>
+                        <xs:attribute name="duration" type="xs:string"></xs:attribute>
+                        <xs:attribute name="mediaType" type="xs:string"></xs:attribute>
+                        <xs:attribute name="msec" type="xs:string"></xs:attribute>
+                        <xs:attribute name="networkCallType" type="xs:string"></xs:attribute>
+                        <xs:attribute name="technology" type="xs:string"></xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="contextversion" type="xs:string"></xs:attribute>
+            <xs:attribute name="host" type="xs:string"></xs:attribute>
+            <xs:attribute name="level" type="xs:string"></xs:attribute>
+            <xs:attribute name="scifservicename" type="xs:string"></xs:attribute>
+            <xs:attribute name="seeinstanceid" type="xs:string"></xs:attribute>
+            <xs:attribute name="sessionid" type="xs:string"></xs:attribute>
+            <xs:attribute name="starttime" type="xs:string"></xs:attribute>
+            <xs:attribute name="stoptime" type="xs:string"></xs:attribute>
+            <xs:attribute name="version" type="xs:string"></xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
